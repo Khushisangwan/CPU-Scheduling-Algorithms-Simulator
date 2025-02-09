@@ -30,6 +30,29 @@ void displayGanttChart(const vector<int>& gantt_chart) {
     cout << "|\n";
 }
 
+void fcfs(vector<Process> processes) {
+    int time = 0;
+    vector<int> gantt_chart;
+    
+    sort(processes.begin(), processes.end(), [](Process a, Process b) {
+        return a.arrival_time < b.arrival_time;
+    });
+    
+    for (auto& p : processes) {
+        if (time < p.arrival_time) {
+            time = p.arrival_time;
+        }
+        p.waiting_time = time - p.arrival_time;
+        p.turnaround_time = p.waiting_time + p.burst_time;
+        p.completion_time = time + p.burst_time;
+        time += p.burst_time;
+        gantt_chart.insert(gantt_chart.end(), p.burst_time, p.id);
+    }
+    
+    displayGanttChart(gantt_chart);
+    calculateMetrics(processes);
+}
+
 
 
 
