@@ -22,6 +22,14 @@ void calculateMetrics(vector<Process>& processes) {
     cout << "\nAverage Turnaround Time: " << (float)total_turnaround_time / processes.size() << " ms\n";
 }
 
+void displayGanttChart(const vector<int>& gantt_chart) {
+    cout << "\nGantt Chart:\n";
+    for (int pid : gantt_chart) {
+        cout << "| P" << pid << " ";
+    }
+    cout << "|\n";
+}
+
 
 
 
