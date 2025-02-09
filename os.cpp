@@ -84,6 +84,34 @@ void sjf(vector<Process> processes) {
     calculateMetrics(processes);
 }
 
+void roundRobin(vector<Process> processes, int quantum) {
+    int time = 0;
+    queue<int> q;
+    vector<int> gantt_chart;
+    for (int i = 0; i < processes.size(); i++) q.push(i);
+    
+    while (!q.empty()) {
+        int idx = q.front(); q.pop();
+        auto& p = processes[idx];
+        if (p.remaining_time > quantum) {
+            p.remaining_time -= quantum;
+            time += quantum;
+            gantt_chart.insert(gantt_chart.end(), quantum, p.id);
+            q.push(idx);
+        } else {
+            time += p.remaining_time;
+            gantt_chart.insert(gantt_chart.end(), p.remaining_time, p.id);
+            p.remaining_time = 0;
+            p.completion_time = time;
+            p.turnaround_time = p.completion_time - p.arrival_time;
+            p.waiting_time = p.turnaround_time - p.burst_time;
+        }
+    }
+    
+    displayGanttChart(gantt_chart);
+    calculateMetrics(processes);
+}
+
 
 
 
