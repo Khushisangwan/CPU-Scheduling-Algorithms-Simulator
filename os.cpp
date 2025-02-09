@@ -169,7 +169,7 @@ int main() {
         case 2: sjf(processes); break;
         case 3: roundRobin(processes, quantum); break;
         case 4: priorityScheduling(processes); break;
-        default: cout << "Invalid choice!";
+        default: cout << "Invalid choice!!!";
     }
     return 0;
 }
