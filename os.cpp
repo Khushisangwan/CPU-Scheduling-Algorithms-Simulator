@@ -12,6 +12,17 @@ struct Process {
 };
 
 
+void calculateMetrics(vector<Process>& processes) {
+    int total_waiting_time = 0, total_turnaround_time = 0;
+    for (const auto& p : processes) {
+        total_waiting_time += p.waiting_time;
+        total_turnaround_time += p.turnaround_time;
+    }
+    cout << "\nAverage Waiting Time: " << (float)total_waiting_time / processes.size() << " ms";
+    cout << "\nAverage Turnaround Time: " << (float)total_turnaround_time / processes.size() << " ms\n";
+}
+
+
 
 
 
