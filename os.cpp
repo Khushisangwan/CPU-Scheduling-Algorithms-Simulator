@@ -53,6 +53,37 @@ void fcfs(vector<Process> processes) {
     calculateMetrics(processes);
 }
 
+void sjf(vector<Process> processes) {
+    int time = 0, completed = 0;
+    vector<int> gantt_chart;
+    vector<bool> visited(processes.size(), false);
+    
+    while (completed < processes.size()) {
+        int idx = -1, min_burst = INT_MAX;
+        for (int i = 0; i < processes.size(); i++) {
+            if (!visited[i] && processes[i].arrival_time <= time && processes[i].burst_time < min_burst) {
+                min_burst = processes[i].burst_time;
+                idx = i;
+            }
+        }
+        if (idx == -1) {
+            time++;
+            continue;
+        }
+        auto& p = processes[idx];
+        p.waiting_time = time - p.arrival_time;
+        p.turnaround_time = p.waiting_time + p.burst_time;
+        p.completion_time = time + p.burst_time;
+        time += p.burst_time;
+        visited[idx] = true;
+        completed++;
+        gantt_chart.insert(gantt_chart.end(), p.burst_time, p.id);
+    }
+    
+    displayGanttChart(gantt_chart);
+    calculateMetrics(processes);
+}
+
 
 
 
